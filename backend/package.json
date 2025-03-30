@@ -1,12 +1,25 @@
 {
   "name": "helixscribecontentcreation",
   "description": "HelixScribe Content Creation - template backend",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
-    "start": "npm run db:migrate && npm run db:seed && nodemon ./src/index.js",
-    "db:migrate": "sequelize-cli db:migrate",
-    "db:seed": "sequelize-cli db:seed:all",
-    "db:drop": "sequelize-cli db:drop",
-    "db:create": "sequelize-cli db:create"
+    // Runs db:create, db:migrate, db:seed, then starts the server with nodemon
+    "start": "npm run db:create && npm run db:migrate && npm run db:seed && nodemon ./src/index.js",
+    
+    // Creates your database (if not already existing)
+    "db:create": "npx sequelize-cli db:create",
+
+    // Runs all migrations in your migrations folder
+    "db:migrate": "npx sequelize-cli db:migrate",
+
+    // Runs all seeders
+    "db:seed": "npx sequelize-cli db:seed:all",
+
+    // Drops database (use carefully)
+    "db:drop": "npx sequelize-cli db:drop"
   },
   "dependencies": {
     "@google-cloud/storage": "^5.18.2",
@@ -37,10 +50,6 @@
     "swagger-ui-express": "^5.0.0",
     "tedious": "^18.2.4"
   },
-  "engines": {
-    "node": ">=18"
-  },
-  "private": true,
   "devDependencies": {
     "cross-env": "7.0.3",
     "mocha": "8.1.3",
